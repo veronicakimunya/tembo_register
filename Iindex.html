@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tembo | AI & Data Entry Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- Modal Styles --- */
+        .modal-overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            border: 2px solid #00ff85;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 0 30px rgba(0, 255, 133, 0.2);
+        }
+
+        .modal-content h3 {
+            color: #00ff85;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            color: #fff;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .btn-close {
+            margin-top: 25px;
+            background: #00ff85;
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">TEMBO</div>
+        <div style="font-size: 0.8rem;">RECRUITMENT PORTAL</div>
+    </nav>
+
+    <header>
+        <h2>Join Tembo: AI Training Personnel</h2>
+        <p>Complete your registration below.</p>
+    </header>
+
+    <section class="form-card">
+        <form id="registrationForm" name="google-sheet">
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" name="Full Name" placeholder="As per National ID" required>
+            </div>
+
+            <div class="form-group">
+                <label>Shift Preference</label>
+                <select name="Shift" required>
+                    <option value="" disabled selected>Select shift</option>
+                    <option value="day">Day Shift</option>
+                    <option value="night">Night Shift</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>County</label>
+                <select name="Residence" required>
+                    <option value="nairobi">Nairobi</option>
+                    <option value="kiambu">Kiambu</option>
+                    <option value="mombasa">Mombasa</option>
+                    <option value="nakuru">Nakuru</option>
+                    <option value="kilifi">Kilifi</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>M-Pesa Number</label>
+                <input type="tel" name="Phone" placeholder="07XXXXXXXX" required>
+            </div>
+
+            <div class="pochi-box">
+                <p style="margin:0; font-size:0.8rem;">Pay via Pochi La Biashara</p>
+                <span class="pochi-number">0791022811</span>
+                <p class="hr-name">HR: HOKA EMIRIKWA</p>
+            </div>
+
+            <button type="submit" class="btn-submit" id="submitBtn">Submit Application</button>
+        </form>
+    </section>
+
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-content">
+            <h3>SUCCESS!</h3>
+            <p>Your registration has been successfully processed.</p>
+            <p style="color: #00ff85; margin-top: 10px;">You will receive a confirmation text via the M-Pesa number used shortly.</p>
+            <button class="btn-close" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <footer>&copy; 2025 Tembo AI Solutions.</footer>
+<!-- https://script.google.com/macros/s/AKfycbzTgvHi9mJ85vkWrm3pVSOsZd6wqL17byZ_k0UvGH3I7kUqA3x_HVc5pgWJbIH27P-3IQ/exec -->
+    <script>
+    // Use the latest URL from your new deployment
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbz29MSVuUytVu7ji3lOGQbgmu7wK0l-2Twf-wrrznvAkJWbAlFlStWU9gnP4j9Ltiv4pg/exec';
+    
+    const form = document.forms['google-sheet']
+    const btn = document.getElementById('submitBtn')
+    const modal = document.getElementById('successModal')
+
+    form.addEventListener('submit', e => {
+        e.preventDefault()
+        btn.disabled = true;
+        btn.innerHTML = "Processing...";
+        
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(res => {
+                console.log('Success!', res);
+                modal.style.display = 'flex';
+                form.reset();
+                btn.disabled = false;
+                btn.innerHTML = "Submit Application";
+            })
+            .catch(err => {
+                console.error('Error!', err.message);
+                alert("Submission error. Please check your internet.");
+                btn.disabled = false;
+                btn.innerHTML = "Submit Application";
+            })
+    })
+
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+
+    
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+
+   
+    document.onkeydown = function(e) {
+        if (e.keyCode == 123) { // F12
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { // Ctrl+Shift+I
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { // Ctrl+Shift+C
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { // Ctrl+Shift+J
+            return false;
+        }
+        if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { // Ctrl+U (View Source)
+            return false;
+        }
+    };
+
+   
+    setInterval(function() {
+        debugger;
+    }, 100);
+</script>
+
+</body>
+</html>
